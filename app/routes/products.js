@@ -13,10 +13,15 @@ let load = (req, res, next, id) => {
 let index = (req, res) => {
   Product.find()
     .sort({'createdAt': -1})
+    .exec((err, products) => {
+      res.json({products: products});
+    });
 };
-let new = (req, res) => {};
-let create = (req, res) => {};
-let edit = (req, res) => {};
+// let new = (req, res) => {};
+let create = (req, res) => {
+  Product.findOrCreate
+};
+// let edit = (req, res) => {};
 let update = (req, res) => {};
 let show = (req, res) => {};
 let destroy = (req, res) => {};
@@ -24,9 +29,9 @@ let destroy = (req, res) => {};
 export default {
   load,
   index,
-  new,
+  // new,
   create,
-  edit,
+  // edit,
   update,
   show,
   destroy

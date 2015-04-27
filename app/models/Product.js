@@ -9,8 +9,8 @@ let ProductSchema = new Schema({
   vendor: String,
   name: String,
   description: String,
-  images: [String],
   category: String,
+  images: [String],
   tags: [String],
   price: [Price],
   details: Schema.Types.Mixed
