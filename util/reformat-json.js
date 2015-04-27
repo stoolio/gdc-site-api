@@ -39,14 +39,19 @@ for(var k in data) {
     switch(prop) {
       case 'model':
       case 'collection':
-      case 'images':
+        newObj[renameMap[prop]] = obj[prop];
+        break;
+      case 'views':
         // First image is the 'main' image
         // do something about that
-        newObj[renameMap[prop]] = obj[prop];
+        newObj.image = obj[prop].shift();
+        newObj.images= obj[prop];
         break;
       case 'type':
         newObj.details = newObj.details || {};
         newObj.details[prop] = obj[prop];
+        break;
+      case 'price':
         break;
       case 'main_view':
       case 'thumb_dim':

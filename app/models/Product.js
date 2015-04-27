@@ -10,6 +10,7 @@ let ProductSchema = new Schema({
   name: String,
   description: String,
   category: String,
+  image: String,
   images: [String],
   tags: [String],
   price: [Price],

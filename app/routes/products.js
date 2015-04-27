@@ -1,10 +1,11 @@
+import assign from 'lodash.assign';
 import mongoose from 'mongoose';
 let Product = mongoose.model('Product');
 
-let load = (req, res, next, id) => {
-  Product.findOne({_id: id}, (err, ring) => {
+let load = (req, res, next, sku) => {
+  Product.findOne({sku: sku}, (err, product) => {
     if(err) return next(err);
-    if(!ring) return next(new Error('not found'));
+    if(!product) return next(new Error('not found'));
     req.product = product;
     next();
   });
@@ -19,12 +20,38 @@ let index = (req, res) => {
 };
 // let new = (req, res) => {};
 let create = (req, res) => {
-  Product.findOrCreate
+  let product = new Product(req.body);
+
+  product.save((err, product) => {
+    res.json({product: product});
+  })
 };
 // let edit = (req, res) => {};
-let update = (req, res) => {};
-let show = (req, res) => {};
-let destroy = (req, res) => {};
+let update = (req, res) => {
+  let product = req.product;
+
+  product = assign(product, req.body);
+
+  product.save((err, product) => {
+    res.json({product: product});
+  })
+};
+let show = (req, res) => {
+  let product = req.product;
+
+  res.json({product: product});
+};
+let destroy = (req, res) => {
+  let product = req.product;
+
+  product.remove((err) => {
+    if(!err) {
+      res.json({result: 'Deleted product!'});
+    } else {
+      res.json({error: err.text});
+    }
+  })
+};
 
 export default {
   load,
